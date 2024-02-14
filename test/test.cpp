@@ -1,17 +1,68 @@
 #include <iostream>
 
 #include "gtest/gtest.h"
+#include "Node.h"
+#include "Player.h"
+#include "Human.h"
+#include "AI.h"
 
 class Test : public testing::Test {
   protected:
-    //uint8_t *buffer;
+    Node *root;
 
     void SetUp() override {
+      root = new Node;
     }
 
     void TearDown() override {
+      delete root;
     }
 };
 
-TEST(Test, nodeTest){
+TEST_F(Test, nodeConstructorTest) {
+  EXPECT_EQ(root->id, 0);
+  EXPECT_EQ(root->children.size(), 0);
+  EXPECT_FALSE(root->min);
+  EXPECT_FALSE(root->max);
+  EXPECT_FALSE(root->terminal);
+}
+
+TEST_F(Test, nodeSetFuncTest) {
+  root->setMin(true);
+  root->setMax(true);
+  root->setTerminal(true);
+
+  EXPECT_TRUE(root->getMin());
+  EXPECT_TRUE(root->getMax());
+  EXPECT_TRUE(root->getTerminal());
+}
+
+TEST_F(Test, addChildNodeTest) {
+  Node *child = new Node;
+
+  root->addChild(child);
+
+  EXPECT_EQ(root->id, 0);
+  EXPECT_EQ(root->children.size(), 1);
+
+  EXPECT_EQ(child->id, 1);
+  EXPECT_EQ(child->parent, root);
+
+  Node *child2 = new Node;
+
+  child->addChild(child2);
+
+  EXPECT_EQ(root->children.size(), 1);
+  EXPECT_EQ(child2->id, 2);
+  EXPECT_EQ(child2->parent, child);
+}
+
+TEST_F(Test, humanConstructorTest) {
+  Human *h = new Human;
+
+  EXPECT_EQ(h->getX(), false);
+  EXPECT_EQ(h->getO(), true);\
+  EXPECT_EQ(h->determineMove(), 10);
+
+  delete h;
 }

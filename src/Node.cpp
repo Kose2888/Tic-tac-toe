@@ -2,6 +2,10 @@
 
 Node::Node() {
   id = 0;
+  min = false;
+  max = false;
+  terminal = false;
+
   parent = NULL;
 }
 
@@ -13,7 +17,18 @@ Node::~Node() {
 
 void Node::addChild(Node *child) {
   child->id = this->id + 1;
-  child->s.setState(this->s.getlM(),this->s.getrM(), this->s.getlC(), this->s.getrC(), this->s.getBoat());
   child->parent = this;
   children.push_back(child);
+}
+
+void Node::setMin(bool b) {
+   min = b;
+}
+
+void Node::setMax(bool b) {
+   max = b;
+}
+
+void Node::setTerminal(bool b) {
+   terminal = b;
 }
