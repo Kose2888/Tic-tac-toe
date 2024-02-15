@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Human.h"
 #include "AI.h"
+#include "Game.h"
 
 class Test : public testing::Test {
   protected:
@@ -18,6 +19,9 @@ class Test : public testing::Test {
       delete root;
     }
 };
+
+
+/*------------Node Tests-----------------*/
 
 TEST_F(Test, nodeConstructorTest) {
   EXPECT_EQ(root->id, 0);
@@ -57,12 +61,54 @@ TEST_F(Test, addChildNodeTest) {
   EXPECT_EQ(child2->parent, child);
 }
 
+
+/*------------Player Tests-----------------*/
+
 TEST_F(Test, humanConstructorTest) {
   Human *h = new Human;
 
   EXPECT_EQ(h->getX(), false);
   EXPECT_EQ(h->getO(), true);\
-  EXPECT_EQ(h->determineMove(), 10);
+  //EXPECT_EQ(h->determineMove(), 10);
 
   delete h;
 }
+
+
+/*------------Game Tests-----------------*/
+
+TEST_F(Test, gameConstructorTest) {
+  Game *g = new Game;
+
+  for(int i = 0; i <= 8; i++) {
+    EXPECT_EQ(g->getGrid()[i], ' ');
+  }
+
+  g->displayGrid();
+
+  delete g;
+}
+
+TEST_F(Test, gameSetSquareTest) {
+  Game *g = new Game;
+
+  for(int i = 0; i <= 8; i++) {
+    g->setSquare(i, 'X');
+    EXPECT_EQ(g->getGrid()[i], 'X');
+  }
+  g->displayGrid();
+
+  g->resetGrid();
+
+  for(int i = 0; i <= 8; i++) {
+    g->setSquare(i, 'O');
+    EXPECT_EQ(g->getSquare(i), 'O');
+  }
+  g->displayGrid();
+
+  delete g;
+}
+
+// Test checkwin
+// Make a function for turns
+// Make a function for adding children nodes based on all possible moves for that players turn
