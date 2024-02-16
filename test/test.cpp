@@ -62,11 +62,28 @@ TEST_F(Test, addChildNodeTest) {
 }
 
 TEST_F(Test, nextMoveTest) {
+  root->max = true;
+  EXPECT_EQ(root->max, true);
+
+  root->g.setSquare(0, 'O');
+  root->g.setSquare(4, 'O');
+  root->g.setSquare(7, 'O');
+
   root->nextXMoves();
 
   for(int i = 0; i <= root->children.size() - 1; i++) {
     root->children[i]->g.displayGrid();
+    EXPECT_EQ(root->children[i]->min, true);
+    EXPECT_EQ(root->children[i]->max, false);
+    EXPECT_EQ(root->children[i]->terminal, false);
   }
+
+  std::cout << "Level 2" << std::endl;
+  root->children[0]->nextXMoves();
+  root->children[0]->children[0]->g.displayGrid();
+  EXPECT_EQ(root->children[0]->children[0]->max, true);
+  EXPECT_EQ(root->children[0]->children[0]->min, false);
+  EXPECT_EQ(root->children[0]->children[0]->terminal, false);
 }
 
 /*------------Player Tests-----------------*/

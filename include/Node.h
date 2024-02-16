@@ -42,6 +42,8 @@ class Node {
     bool getTerminal() const {return terminal;}
 
     void nextXMoves();
+
+    void nextOMoves();
 };
 
 #endif

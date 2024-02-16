@@ -31,6 +31,23 @@ Node::~Node() {
 void Node::addChild(Node *child) {
   child->id = this->id + 1;
   child->parent = this;
+
+  if(min == true) {
+    child->min = false;
+    child->max = true;
+  }
+
+  if(max == true) {
+    child->max = false;
+    child->min = true;
+  }
+
+  if(child->g.checkWin() != 2) {
+    child->max = false;
+    child->min = false;
+    child->terminal = true;
+  }
+
   children.push_back(child);
 }
 
@@ -51,6 +68,16 @@ void Node::nextXMoves() {
     if(g.getGrid()[i] == ' ') {
       Node *child = new Node(g);
       child->g.setSquare(i, 'X');
+      addChild(child);
+    }
+  }
+}
+
+void Node::nextOMoves() {
+  for (int i = 0; i <= 8; i++) {
+    if(g.getGrid()[i] == ' ') {
+      Node *child = new Node(g);
+      child->g.setSquare(i, 'O');
       addChild(child);
     }
   }
