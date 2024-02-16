@@ -33,7 +33,7 @@ int AI::buildTree(Node *node, int v) {
 }
 
 int AI::minmax(Node *node, int best, int alpha, int beta) {
-  //node->g.displayGrid();
+  node->g.displayGrid();
   if(node->terminal == true)
     return node->g.checkWin();
 
@@ -66,6 +66,7 @@ int AI::minmax(Node *node, int best, int alpha, int beta) {
     return b;
   }
 }
+// Try returning a node instead of b, and instead use the node to get the value for b
 
 int AI::determineMove() {
   return 0;

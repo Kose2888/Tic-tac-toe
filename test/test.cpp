@@ -111,7 +111,12 @@ TEST_F(Test, miniMaxTest) {
   AI *ai = new AI;
   int value = 0;
 
-  root->max = true;
+  root->min = true;
+  root->g.setSquare(0, 'X');
+  root->g.setSquare(1, 'O');
+  root->g.setSquare(2, 'X');
+  root->g.setSquare(3, 'X');
+  root->g.setSquare(4, 'X');
 
   std::cout << "Minimax: " << ai->minmax(root, value, -1000, 1000) << std::endl;
 
