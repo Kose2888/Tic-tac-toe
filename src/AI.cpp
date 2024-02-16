@@ -32,23 +32,27 @@ int AI::buildTree(Node *node, int v) {
   return v;
 }
 
-int AI::minmax(Node *node, int best, int alpha, int beta) {
+int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta) {
   node->g.displayGrid();
-  if(node->terminal == true)
+  if(node->terminal == true) {
+    path.push_back(node);
     return node->g.checkWin();
+  }
 
   if(node->max == true){
     node->nextXMoves();
     int b = MIN;
 
     for(int i = 0; i < node->children.size(); i++) {
-      int val = minmax(node->children[i], best, alpha, beta);
+      int val = minmax(node->children[i], path, alpha, beta);
       b = std::max(b, val);
       alpha = std::max(alpha, b);
 
-      if(beta <= alpha)
-          break;
+      if(beta <= alpha) {
+        break;
+      }
     }
+        //path.push_back(node);
     return b;
   }
   else {
@@ -56,17 +60,25 @@ int AI::minmax(Node *node, int best, int alpha, int beta) {
     int b = MAX;
 
     for(int i = 0; i < node->children.size(); i++) {
-      int val = minmax(node->children[i], best, alpha, beta);
-      b = std::min(beta, val);
-      beta = std::min(beta, best);
+      int val = minmax(node->children[i], path, alpha, beta);
+      b = std::min(b, val);
+      beta = std::min(beta, b);
 
-      if(beta <= alpha)
+      if(beta <= alpha) {
         break;
+      }
     }
+        //path.push_back(node);
     return b;
   }
 }
-// Try returning a node instead of b, and instead use the node to get the value for b
+
+Node * AI::bestBranch(Node *node) {
+  if(node->id == 1)
+    return node;
+
+  return bestBranch(node->parent);
+}
 
 int AI::determineMove() {
   return 0;

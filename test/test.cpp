@@ -109,16 +109,39 @@ TEST_F(Test, buildTreeTest) {
 
 TEST_F(Test, miniMaxTest) {
   AI *ai = new AI;
-  int value = 0;
+  std::vector<Node*> path;
 
   root->min = true;
-  root->g.setSquare(0, 'X');
-  root->g.setSquare(1, 'O');
+  root->g.setSquare(0, 'O');
+  root->g.setSquare(1, 'X');
   root->g.setSquare(2, 'X');
-  root->g.setSquare(3, 'X');
-  root->g.setSquare(4, 'X');
+  root->g.setSquare(3, 'O');
 
-  std::cout << "Minimax: " << ai->minmax(root, value, -1000, 1000) << std::endl;
+  std::cout << "Minimax: " << ai->minmax(root, path, -1000, 1000) << std::endl;
+
+  std::cout << "Path size: " << path.size() << std::endl;
+  for(int i = 0; i < path.size(); i++) {
+    std::cout << "In for loop" << std::endl;
+    std::cout << path[i]->id << std::endl;
+    path[i]->g.displayGrid();
+  }
+
+  std::cout << "TESTTT" << std::endl;
+  Node *best = path[0];
+  best->g.displayGrid();
+  for(int i = 0; i < path.size() -1; i++) {
+    if( (path[i+1]->id < best->id) && path[i+1]->g.checkWin() == -1)
+      best = path[i+1];
+  }
+  std::cout << "Best" << std::endl;
+  best->g.displayGrid();
+
+  std::cout << "leaf node of best branch" << std::endl;
+  //path[0]->g.displayGrid();
+
+  std::cout << "Best branch function" << std::endl;
+  //ai->bestBranch(path[0])->g.displayGrid();
+
 
   delete ai;
 }

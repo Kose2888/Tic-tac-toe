@@ -20,7 +20,9 @@ class AI : public Player {
 
     int determineMove();
 
-    int minmax(Node *node, int best, int alpha, int beta);
+    int minmax(Node *node, std::vector<Node*> &path, int alpha, int beta);
+
+    Node * bestBranch(Node *);
 
 };
 
