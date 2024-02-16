@@ -7,7 +7,6 @@
 #include "Player.h"
 #include "Human.h"
 #include "AI.h"
-#include "Node.h"
 
 
 class Grid {

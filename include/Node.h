@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 
+#include "Grid.h"
 
 class Node {
   private:
@@ -18,7 +19,11 @@ class Node {
     Node *parent;
     std::vector<Node*> children;
 
+    Grid g;
+
     Node();
+
+    Node(Grid);
 
     ~Node();
 
@@ -35,6 +40,8 @@ class Node {
     bool getMax() const {return max;}
 
     bool getTerminal() const {return terminal;}
+
+    void nextXMoves();
 };
 
 #endif

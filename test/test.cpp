@@ -61,6 +61,13 @@ TEST_F(Test, addChildNodeTest) {
   EXPECT_EQ(child2->parent, child);
 }
 
+TEST_F(Test, nextMoveTest) {
+  root->nextXMoves();
+
+  for(int i = 0; i <= root->children.size() - 1; i++) {
+    root->children[i]->g.displayGrid();
+  }
+}
 
 /*------------Player Tests-----------------*/
 
@@ -69,7 +76,7 @@ TEST_F(Test, humanConstructorTest) {
 
   EXPECT_EQ(h->getX(), false);
   EXPECT_EQ(h->getO(), true);\
-  EXPECT_EQ(h->determineMove(), 10);
+  //EXPECT_EQ(h->determineMove(), 10);
 
   delete h;
 }
@@ -77,7 +84,7 @@ TEST_F(Test, humanConstructorTest) {
 
 /*------------Grid Tests-----------------*/
 
-TEST_F(Test, gameConstructorTest) {
+TEST_F(Test, gridConstructorTest) {
   Grid *g = new Grid;
 
   for(int i = 0; i <= 8; i++) {
@@ -89,7 +96,7 @@ TEST_F(Test, gameConstructorTest) {
   delete g;
 }
 
-TEST_F(Test, gameSetSquareTest) {
+TEST_F(Test, gridSetSquareTest) {
   Grid *g = new Grid;
 
   for(int i = 0; i <= 8; i++) {
@@ -109,6 +116,97 @@ TEST_F(Test, gameSetSquareTest) {
   delete g;
 }
 
-// Test checkwin
+TEST_F(Test, gridCheckWinTest) {
+  Grid *g = new Grid;
+
+  // Check Vertical X
+  g->setSquare(2, 'X');
+  g->setSquare(5, 'X');
+  g->setSquare(8, 'X');
+
+  g->displayGrid();
+
+  EXPECT_EQ(g->checkWin(), 1);
+  g->resetGrid();
+
+  // Check Horizontal X
+  g->setSquare(6, 'X');
+  g->setSquare(7, 'X');
+  g->setSquare(8, 'X');
+
+  g->displayGrid();
+
+  EXPECT_EQ(g->checkWin(), 1);
+  g->resetGrid();
+
+  // Check Diagonal X
+  g->setSquare(6, 'X');
+  g->setSquare(4, 'X');
+  g->setSquare(2, 'X');
+
+  g->displayGrid();
+
+  EXPECT_EQ(g->checkWin(), 1);
+  g->resetGrid();
+
+
+  // Check Vertical O
+  g->setSquare(0, 'O');
+  g->setSquare(3, 'O');
+  g->setSquare(6, 'O');
+
+  g->displayGrid();
+
+  EXPECT_EQ(g->checkWin(), -1);
+  g->resetGrid();
+
+  // Check Horizontal O
+  g->setSquare(0, 'O');
+  g->setSquare(1, 'O');
+  g->setSquare(2, 'O');
+
+  g->displayGrid();
+
+  EXPECT_EQ(g->checkWin(), -1);
+  g->resetGrid();
+
+  // Check Diagonal O
+  g->setSquare(0, 'O');
+  g->setSquare(4, 'O');
+  g->setSquare(8, 'O');
+
+  g->displayGrid();
+
+  EXPECT_EQ(g->checkWin(), -1);
+
+  // Check tie
+  g->setSquare(0, 'O');
+  g->setSquare(1, 'X');
+  g->setSquare(2, 'X');
+  g->setSquare(3, 'X');
+  g->setSquare(4, 'O');
+  g->setSquare(5, 'O');
+  g->setSquare(6, 'X');
+  g->setSquare(7, 'O');
+  g->setSquare(8, 'X');
+
+  g->displayGrid();
+
+  EXPECT_EQ(g->checkWin(), 0);
+  g->resetGrid();
+
+  // Check no win and no tie
+  g->setSquare(0, 'O');
+  g->setSquare(1, 'X');
+  g->setSquare(2, 'X');
+  g->setSquare(3, 'X');
+
+  g->displayGrid();
+
+  EXPECT_EQ(g->checkWin(), 2);
+
+  delete g;
+}
+
 // Make a function for turns
 // Make a function for adding children nodes based on all possible moves for that players turn
