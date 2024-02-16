@@ -85,6 +85,38 @@ TEST_F(Test, nextMoveTest) {
   EXPECT_EQ(root->children[0]->children[0]->min, false);
   EXPECT_EQ(root->children[0]->children[0]->terminal, false);
 }
+/*
+TEST_F(Test, buildTreeTest) {
+  AI *ai = new AI;
+  int value = 0;
+
+  root->max = true;
+  root->g.setSquare(0, 'X');
+  root->g.setSquare(1, 'O');
+  root->g.setSquare(2, 'X');
+  root->g.setSquare(3, 'X');
+  root->g.setSquare(4, 'X');
+
+  std::cout << "Size: " << ai->buildTree(root, value) << std::endl;
+
+  //for(int i = 0; i <= root->children.size() - 1; i++){
+  //  root->children[i]->g.displayGrid();
+  //}
+
+  delete ai;
+}
+*/
+
+TEST_F(Test, miniMaxTest) {
+  AI *ai = new AI;
+  int value = 0;
+
+  root->max = true;
+
+  std::cout << "Minimax: " << ai->minmax(root, value, -1000, 1000) << std::endl;
+
+  delete ai;
+}
 
 /*------------Player Tests-----------------*/
 
@@ -92,7 +124,7 @@ TEST_F(Test, humanConstructorTest) {
   Human *h = new Human;
 
   EXPECT_EQ(h->getX(), false);
-  EXPECT_EQ(h->getO(), true);\
+  EXPECT_EQ(h->getO(), true);
   //EXPECT_EQ(h->determineMove(), 10);
 
   delete h;

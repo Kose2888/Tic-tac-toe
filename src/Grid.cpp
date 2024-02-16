@@ -71,7 +71,7 @@ int Grid::checkWin() {
   // Check if there are any empty spaces
   for(int i = 0; i <= 8; i++) {
     if(grid[i] == ' ') {
-      std::cout << "CheckWin: Board is not filled yet" << std::endl;
+      //std::cout << "CheckWin: Board is not filled yet" << std::endl;
       return 2;
     }
   }

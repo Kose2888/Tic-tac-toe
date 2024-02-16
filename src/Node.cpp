@@ -17,7 +17,7 @@ Node::Node(Grid g2) {
 
   parent = NULL;
 
-  for(int i = 0; i <= 8; i++) {
+  for(int i = 0; i < 9; i++) {
     g.setSquare(i, g2.getSquare(i));
   }
 }
@@ -35,11 +35,13 @@ void Node::addChild(Node *child) {
   if(min == true) {
     child->min = false;
     child->max = true;
+    child->terminal = false;
   }
 
   if(max == true) {
     child->max = false;
     child->min = true;
+    child->terminal = false;
   }
 
   if(child->g.checkWin() != 2) {
@@ -64,8 +66,8 @@ void Node::setTerminal(bool b) {
 }
 
 void Node::nextXMoves() {
-  for (int i = 0; i <= 8; i++) {
-    if(g.getGrid()[i] == ' ') {
+  for (int i = 0; i < 9; i++) {
+    if(g.getSquare(i) == ' ') {
       Node *child = new Node(g);
       child->g.setSquare(i, 'X');
       addChild(child);
@@ -74,8 +76,8 @@ void Node::nextXMoves() {
 }
 
 void Node::nextOMoves() {
-  for (int i = 0; i <= 8; i++) {
-    if(g.getGrid()[i] == ' ') {
+  for (int i = 0; i < 9; i++) {
+    if(g.getSquare(i) == ' ') {
       Node *child = new Node(g);
       child->g.setSquare(i, 'O');
       addChild(child);

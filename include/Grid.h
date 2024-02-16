@@ -4,10 +4,6 @@
 #include <iostream>
 #include <vector>
 
-#include "Player.h"
-#include "Human.h"
-#include "AI.h"
-
 
 class Grid {
   private:
