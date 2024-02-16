@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "Human.h"
 #include "AI.h"
-#include "Game.h"
+#include "Grid.h"
 
 class Test : public testing::Test {
   protected:
@@ -69,16 +69,16 @@ TEST_F(Test, humanConstructorTest) {
 
   EXPECT_EQ(h->getX(), false);
   EXPECT_EQ(h->getO(), true);\
-  //EXPECT_EQ(h->determineMove(), 10);
+  EXPECT_EQ(h->determineMove(), 10);
 
   delete h;
 }
 
 
-/*------------Game Tests-----------------*/
+/*------------Grid Tests-----------------*/
 
 TEST_F(Test, gameConstructorTest) {
-  Game *g = new Game;
+  Grid *g = new Grid;
 
   for(int i = 0; i <= 8; i++) {
     EXPECT_EQ(g->getGrid()[i], ' ');
@@ -90,7 +90,7 @@ TEST_F(Test, gameConstructorTest) {
 }
 
 TEST_F(Test, gameSetSquareTest) {
-  Game *g = new Game;
+  Grid *g = new Grid;
 
   for(int i = 0; i <= 8; i++) {
     g->setSquare(i, 'X');

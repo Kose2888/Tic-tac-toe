@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GRID_H
+#define GRID_H
 
 #include <iostream>
 #include <vector>
@@ -10,14 +10,14 @@
 #include "Node.h"
 
 
-class Game {
+class Grid {
   private:
     std::vector<char> grid;
 
   public:
-    Game();
+    Grid();
 
-    ~Game();
+    ~Grid();
 
     std::vector<char> getGrid() {return grid;}
 

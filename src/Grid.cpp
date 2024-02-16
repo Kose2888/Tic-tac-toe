@@ -1,15 +1,15 @@
-#include "Game.h"
+#include "Grid.h"
 
-Game::Game() {
+Grid::Grid() {
   for(int i = 0; i <= 8; i++) {
     grid.push_back(' ');
   }
 }
 
-Game::~Game() {
+Grid::~Grid() {
 }
 
-void Game::setSquare(int n, char c) {
+void Grid::setSquare(int n, char c) {
   if(c == 'X' || c == 'O' || n >= 0 || n <= 8) {
     grid[n] = c;
   }
@@ -17,7 +17,7 @@ void Game::setSquare(int n, char c) {
     std::cout << "Error: Invalid position or not X or O" << std::endl;
 }
 
-void Game::displayGrid() {
+void Grid::displayGrid() {
   std::cout << grid[0] << " | " << grid[1] << " | " << grid[2]
     << "\n---------\n"
     << grid[3] << " | " << grid[4] << " | " << grid[5]
@@ -25,12 +25,12 @@ void Game::displayGrid() {
     << grid[6] << " | " << grid[7] << " | " << grid[8] << std::endl;
 }
 
-void Game::resetGrid() {
+void Grid::resetGrid() {
   for(int i = 0; i <= 8; i++)
     grid[i] = ' ';
 }
 
-int Game::checkWin() {
+int Grid::checkWin() {
   // Check for O horizontal win
   for(int i = 0; i <= 2; i++) {
     if(grid[i] == 'O' && grid[i+1] == 'O' && grid[i+2] == 'O')
