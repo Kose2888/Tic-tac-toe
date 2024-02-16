@@ -19,7 +19,7 @@ class Player {
 
     bool getO() const {return O;}
 
-    virtual int determineMove() = 0;  // Parameters TBD
+    //virtual int determineMove() = 0;  // Parameters TBD
 
 };
 

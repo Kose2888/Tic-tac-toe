@@ -52,7 +52,7 @@ int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta) {
         break;
       }
     }
-        //path.push_back(node);
+        path.push_back(node);
     return b;
   }
   else {
@@ -68,7 +68,7 @@ int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta) {
         break;
       }
     }
-        //path.push_back(node);
+        path.push_back(node);
     return b;
   }
 }
@@ -80,6 +80,47 @@ Node * AI::bestBranch(Node *node) {
   return bestBranch(node->parent);
 }
 
-int AI::determineMove() {
-  return 0;
+Node * AI::bestXTerminal(std::vector<Node *> path) {
+  Node *best = path[0];
+  for(int i = 0; i < path.size() -1; i++) {
+    if( (path[i+1]->id < best->id) && path[i+1]->g.checkWin() == 1)
+      best = path[i+1];
+  }
+  return best;
+}
+
+Node * AI::bestOTerminal(std::vector<Node *> path) {
+  Node *best = path[0];
+  for(int i = 0; i < path.size() -1; i++) {
+    if( (path[i+1]->id < best->id) && path[i+1]->g.checkWin() == -1)
+      best = path[i+1];
+  }
+  return best;
+}
+
+int AI::determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta) {
+  int minimax = minmax(node, path, alpha, beta);
+
+  std::cout << "Minimax = " << minimax << std::endl;
+
+  if(this->getX() == true){
+    Node *best;
+    best = bestXTerminal(path);
+
+    for(int i = 0; i < 9; i++) {
+      if(best->g.getSquare(i) != best->parent->g.getSquare(i))
+        return i;
+    }
+  }
+  if(this->getO() == true){
+    Node *best;
+    best = bestOTerminal(path);
+
+    for(int i = 0; i < 9; i++) {
+      if(best->g.getSquare(i) != best->parent->g.getSquare(i))
+        return i;
+    }
+  }
+  std::cout << "Error: determinMove" << std::endl;
+  return 200;
 }

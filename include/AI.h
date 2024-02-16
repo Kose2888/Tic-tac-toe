@@ -18,11 +18,15 @@ class AI : public Player {
 
     int buildTree(Node *, int v);
 
-    int determineMove();
-
     int minmax(Node *node, std::vector<Node*> &path, int alpha, int beta);
 
     Node * bestBranch(Node *);
+
+    Node * bestXTerminal(std::vector<Node*>);
+
+    Node * bestOTerminal(std::vector<Node*>);
+
+    int determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta);
 
 };
 
