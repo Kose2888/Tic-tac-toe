@@ -27,7 +27,7 @@ class Game {
 
     void chooseSide();
 
-    void startGame();
+    void startGame(int &humanScore, int &aiScore);
 
 };
 

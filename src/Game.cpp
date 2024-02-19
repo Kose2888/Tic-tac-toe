@@ -54,7 +54,7 @@ void Game::chooseSide() {
 
 }
 
-void Game::startGame() {
+void Game::startGame(int &humanScore, int &aiScore) {
 
   displayRules();
   chooseSide();
@@ -91,23 +91,17 @@ void Game::startGame() {
       node->g = grid;
       node->parent = NULL;
 
-      std::cout << "Node:\n";
-      node->g.displayGrid();
-
       bool invalid = true;
       int amove;
       amove = ai->determineMove(node, path, -1000, 1000, node->id);
-      std::cout << "amove = " << amove << std::endl;
 
       if(grid.getSquare(amove) == 'X' || grid.getSquare(amove) == 'O' ) {
-        std::cout << "ENTER SHITTY FIX" << std::endl;
         node->nextXMoves();
 
         for(int i = 0; i < node->children.size(); i++) {
           if(node->children[i]->g.checkWin() == 1) {
             for(int j = 0; j < 9; j++) {
               if(grid.getSquare(j) != node->children[i]->g.getSquare(j) ){
-                std::cout << "amove = " << amove << std::endl;
                 amove = j;
                 break;
               }
@@ -137,23 +131,17 @@ void Game::startGame() {
       node->g = grid;
       node->parent = NULL;
 
-      std::cout << "Node:\n";
-      node->g.displayGrid();
-
       bool invalid = true;
       int amove;
       amove = ai->determineMove(node, path, -1000, 1000, node->id);
-      std::cout << "amove = " << amove << std::endl;
 
       if(grid.getSquare(amove) == 'X' || grid.getSquare(amove) == 'O' ) {
-        std::cout << "ENTER SHITTY FIX" << std::endl;
         node->nextOMoves();
 
         for(int i = 0; i < node->children.size(); i++) {
           if(node->children[i]->g.checkWin() == -1) {
             for(int j = 0; j < 9; j++) {
               if(grid.getSquare(j) != node->children[i]->g.getSquare(j) ){
-                std::cout << "amove = " << amove << std::endl;
                 amove = j;
                 break;
               }
@@ -163,7 +151,6 @@ void Game::startGame() {
 
       }
       if (grid.getSquare(amove) != ' ') {
-        std::cout << "enter shitty fix 2" << std::endl;
         for(int i = 0; i < 9; i++) {
           if(grid.getSquare(i) == ' ') {
             amove = i;
@@ -206,5 +193,19 @@ void Game::startGame() {
       gameOver = true;
 
   }while(!gameOver);
+
+  int winner = grid.checkWin();
+
+  if(winner == 1) {
+    std::cout << "X's Win!" << std::endl;
+    humanScore += 1;
+  }
+  else if(winner == -1) {
+    std::cout << "O's Win!" << std::endl;
+    aiScore += 1;
+  }
+  else
+    std::cout << "Tie!" << std::endl;
+
 
 }

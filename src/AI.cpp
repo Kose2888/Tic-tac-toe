@@ -54,7 +54,6 @@ int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta, int id
         break;
       }
     }
-        //path.push_back(node);
     return b;
   }
   else {
@@ -70,7 +69,6 @@ int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta, int id
         break;
       }
     }
-        //path.push_back(node);
     return b;
   }
 }
@@ -97,15 +95,11 @@ Node * AI::bestOTerminal(std::vector<Node *> path) {
     if( (path[i+1]->id < best->id) && path[i+1]->g.checkWin() == -1)
       best = path[i+1];
   }
-  std::cout << "Best:" << std::endl;
-  best->g.displayGrid();
   return best;
 }
 
 int AI::determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta, int id) {
   int minimax = minmax(node, path, alpha, beta, id);
-
-  std::cout << "Minimax = " << minimax << std::endl;
 
   bool limit = false;
   int i = 0;
