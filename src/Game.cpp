@@ -79,36 +79,108 @@ void Game::startGame() {
 
       }while(illegalMove);
 
+      if(grid.checkWin() != 2) {
+        gameOver = true;
+        break;
+      }
+
+      // AI Turn
       std::cout << "AI move:" << std::endl;
       std::vector<Node*> path;
       node->min = true;
       node->g = grid;
+      node->parent = NULL;
 
       std::cout << "Node:\n";
       node->g.displayGrid();
 
-      int amove = ai->determineMove(node, path, -1000, 1000);
+      bool invalid = true;
+      int amove;
+      amove = ai->determineMove(node, path, -1000, 1000, node->id);
       std::cout << "amove = " << amove << std::endl;
 
-      /*
-      std::cout << "PATHS" << std::endl;
-      for(int i = 0; i < path.size(); i++) {
-        path[i]->g.displayGrid();
+      if(grid.getSquare(amove) == 'X' || grid.getSquare(amove) == 'O' ) {
+        std::cout << "ENTER SHITTY FIX" << std::endl;
+        node->nextXMoves();
+
+        for(int i = 0; i < node->children.size(); i++) {
+          if(node->children[i]->g.checkWin() == 1) {
+            for(int j = 0; j < 9; j++) {
+              if(grid.getSquare(j) != node->children[i]->g.getSquare(j) ){
+                std::cout << "amove = " << amove << std::endl;
+                amove = j;
+                break;
+              }
+            }
+          }
+        }
+
       }
-      */
+      if (grid.getSquare(amove) != ' ') {
+        for(int i = 0; i < 9; i++) {
+          if(grid.getSquare(i) == ' ') {
+            amove = i;
+            break;
+          }
+        }
+      }
 
       grid.setSquare(amove, 'O');
       grid.displayGrid();
       path.clear();
     }
     else if(human->getX() == false) {
+      // AI Turn
       std::cout << "AI move:" << std::endl;
       std::vector<Node*> path;
       node->max = true;
       node->g = grid;
-      grid.setSquare(ai->determineMove(node, path, -1000, 1000), 'X');
+      node->parent = NULL;
+
+      std::cout << "Node:\n";
+      node->g.displayGrid();
+
+      bool invalid = true;
+      int amove;
+      amove = ai->determineMove(node, path, -1000, 1000, node->id);
+      std::cout << "amove = " << amove << std::endl;
+
+      if(grid.getSquare(amove) == 'X' || grid.getSquare(amove) == 'O' ) {
+        std::cout << "ENTER SHITTY FIX" << std::endl;
+        node->nextOMoves();
+
+        for(int i = 0; i < node->children.size(); i++) {
+          if(node->children[i]->g.checkWin() == -1) {
+            for(int j = 0; j < 9; j++) {
+              if(grid.getSquare(j) != node->children[i]->g.getSquare(j) ){
+                std::cout << "amove = " << amove << std::endl;
+                amove = j;
+                break;
+              }
+            }
+          }
+        }
+
+      }
+      if (grid.getSquare(amove) != ' ') {
+        std::cout << "enter shitty fix 2" << std::endl;
+        for(int i = 0; i < 9; i++) {
+          if(grid.getSquare(i) == ' ') {
+            amove = i;
+            break;
+          }
+        }
+      }
+
+      grid.setSquare(amove, 'X');
       grid.displayGrid();
       path.clear();
+
+
+      if(grid.checkWin() != 2) {
+        gameOver = true;
+        break;
+      }
 
 
       bool illegalMove;
@@ -130,8 +202,8 @@ void Game::startGame() {
       std::cout << "Error in determining move" << std::endl;
     }
 
-  if(grid.checkWin() != 2)
-    gameOver = true;
+    if(grid.checkWin() != 2)
+      gameOver = true;
 
   }while(!gameOver);
 

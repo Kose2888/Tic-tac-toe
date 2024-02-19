@@ -4,8 +4,10 @@
 
 int main(int argc, char *argv []) {
 
- // Game *game = new Game;
+  Game *game = new Game;
 
- // game->startGame();
+  game->startGame();
+
+  delete game;
 
 }

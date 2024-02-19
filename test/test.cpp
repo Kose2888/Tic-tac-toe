@@ -119,7 +119,7 @@ TEST_F(Test, miniMaxTest) {
   root->g.setSquare(3, 'X');
   root->g.setSquare(5, 'X');
 
-  std::cout << "AI next move index: " << ai->determineMove(root, path, -1000, 1000) << std::endl;
+  std::cout << "AI next move index: " << ai->determineMove(root, path, -1000, 1000, root->id) << std::endl;
 
   /*
   std::cout << "Minimax: " << ai->minmax(root, path, -1000, 1000) << std::endl;

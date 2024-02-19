@@ -18,7 +18,7 @@ class AI : public Player {
 
     int buildTree(Node *, int v);
 
-    int minmax(Node *node, std::vector<Node*> &path, int alpha, int beta);
+    int minmax(Node *node, std::vector<Node*> &path, int alpha, int beta, int id);
 
     Node * bestBranch(Node *);
 
@@ -26,7 +26,7 @@ class AI : public Player {
 
     Node * bestOTerminal(std::vector<Node*>);
 
-    int determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta);
+    int determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta, int id);
 
 };
 

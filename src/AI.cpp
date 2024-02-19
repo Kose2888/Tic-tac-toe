@@ -32,19 +32,21 @@ int AI::buildTree(Node *node, int v) {
   return v;
 }
 
-int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta) {
+int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta, int id) {
   //node->g.displayGrid();
   if(node->terminal == true) {
-    path.push_back(node);
+    if(node->id > id){
+      path.push_back(node);
+    }
     return node->g.checkWin();
   }
 
-  if(node->max == true){
+  else if(node->max == true){
     node->nextXMoves();
     int b = MIN;
 
     for(int i = 0; i < node->children.size(); i++) {
-      int val = minmax(node->children[i], path, alpha, beta);
+      int val = minmax(node->children[i], path, alpha, beta, id);
       b = std::max(b, val);
       alpha = std::max(alpha, b);
 
@@ -52,7 +54,7 @@ int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta) {
         break;
       }
     }
-        path.push_back(node);
+        //path.push_back(node);
     return b;
   }
   else {
@@ -60,7 +62,7 @@ int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta) {
     int b = MAX;
 
     for(int i = 0; i < node->children.size(); i++) {
-      int val = minmax(node->children[i], path, alpha, beta);
+      int val = minmax(node->children[i], path, alpha, beta, id);
       b = std::min(b, val);
       beta = std::min(beta, b);
 
@@ -68,7 +70,7 @@ int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta) {
         break;
       }
     }
-        path.push_back(node);
+        //path.push_back(node);
     return b;
   }
 }
@@ -100,17 +102,33 @@ Node * AI::bestOTerminal(std::vector<Node *> path) {
   return best;
 }
 
-int AI::determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta) {
-  int minimax = minmax(node, path, alpha, beta);
+int AI::determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta, int id) {
+  int minimax = minmax(node, path, alpha, beta, id);
 
   std::cout << "Minimax = " << minimax << std::endl;
+
+  bool limit = false;
+  int i = 0;
+  /*
+  do{
+    for(int j = 0; j < 9; j++) {
+      if( (node->g.getSquare(j) == 'X' && path[i]->g.getSquare(j) != 'X') || ( node->g.getSquare(j) == 'O' && path[i]->g.getSquare(j) != 'O') )
+        //std::cout << "Error: Bad path node" << std::endl;
+        break;
+    }
+    if(i == path.size() - 1)
+      limit = true;
+    i++;
+
+  }while(!limit);
+*/
 
   if(this->getX() == true){
     Node *best;
     best = bestXTerminal(path);
 
     for(int i = 0; i < 9; i++) {
-      if(best->g.getSquare(i) != best->parent->g.getSquare(i) && node->g.getSquare(i) == ' ')
+      if(best->g.getSquare(i) != best->parent->g.getSquare(i))
         return i;
     }
   }
@@ -119,7 +137,7 @@ int AI::determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta)
     best = bestOTerminal(path);
 
     for(int i = 0; i < 9; i++) {
-      if(best->g.getSquare(i) != best->parent->g.getSquare(i) && node->g.getSquare(i) == ' ')
+      if(best->g.getSquare(i) != best->parent->g.getSquare(i))
         return i;
     }
   }
