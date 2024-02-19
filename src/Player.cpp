@@ -2,7 +2,7 @@
 
 Player::Player() {
   X = false;
-  O = true;
+  O = false;
 }
 
 Player::~Player() {

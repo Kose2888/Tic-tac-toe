@@ -10,7 +10,7 @@ Grid::~Grid() {
 }
 
 void Grid::setSquare(int n, char c) {
-  if(c == 'X' || c == 'O' || n >= 0 || n <= 8) {
+  if( (c == 'X' || c == 'O' || n >= 0 || n <= 8) && grid[n] == ' ' ) {
     grid[n] = c;
   }
   else

@@ -6,6 +6,7 @@
 #include "Human.h"
 #include "AI.h"
 #include "Grid.h"
+#include "Game.h"
 
 class Test : public testing::Test {
   protected:
@@ -147,7 +148,7 @@ TEST_F(Test, humanConstructorTest) {
   Human *h = new Human;
 
   EXPECT_EQ(h->getX(), false);
-  EXPECT_EQ(h->getO(), true);
+  EXPECT_EQ(h->getO(), false);
   //EXPECT_EQ(h->determineMove(), 10);
 
   delete h;
@@ -251,6 +252,8 @@ TEST_F(Test, gridCheckWinTest) {
 
   EXPECT_EQ(g->checkWin(), -1);
 
+  g->resetGrid();
+
   // Check tie
   g->setSquare(0, 'O');
   g->setSquare(1, 'X');
@@ -280,5 +283,11 @@ TEST_F(Test, gridCheckWinTest) {
   delete g;
 }
 
-// Make a function for turns
-// Make a function for adding children nodes based on all possible moves for that players turn
+
+TEST_F(Test, startGameTest) {
+  Game *game = new Game;
+
+  game->startGame();
+
+  delete game;
+}

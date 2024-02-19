@@ -33,7 +33,7 @@ int AI::buildTree(Node *node, int v) {
 }
 
 int AI::minmax(Node *node, std::vector<Node*> &path, int alpha, int beta) {
-  node->g.displayGrid();
+  //node->g.displayGrid();
   if(node->terminal == true) {
     path.push_back(node);
     return node->g.checkWin();
@@ -95,6 +95,8 @@ Node * AI::bestOTerminal(std::vector<Node *> path) {
     if( (path[i+1]->id < best->id) && path[i+1]->g.checkWin() == -1)
       best = path[i+1];
   }
+  std::cout << "Best:" << std::endl;
+  best->g.displayGrid();
   return best;
 }
 
@@ -108,7 +110,7 @@ int AI::determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta)
     best = bestXTerminal(path);
 
     for(int i = 0; i < 9; i++) {
-      if(best->g.getSquare(i) != best->parent->g.getSquare(i))
+      if(best->g.getSquare(i) != best->parent->g.getSquare(i) && node->g.getSquare(i) == ' ')
         return i;
     }
   }
@@ -117,7 +119,7 @@ int AI::determineMove(Node *node, std::vector<Node*> &path, int alpha, int beta)
     best = bestOTerminal(path);
 
     for(int i = 0; i < 9; i++) {
-      if(best->g.getSquare(i) != best->parent->g.getSquare(i))
+      if(best->g.getSquare(i) != best->parent->g.getSquare(i) && node->g.getSquare(i) == ' ')
         return i;
     }
   }
