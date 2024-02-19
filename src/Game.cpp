@@ -34,7 +34,9 @@ void Game::chooseSide() {
 
   std::cout << "Choose your side:\n" << "1) X (Goes first)\n"
     << "2) O\n" << "Enter: ";
-
+    std::cin.clear();
+    //std::cin.ignore(std::cin.rdbuf()->in_avail());
+    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cin >> choice;
 
     switch(choice) {
@@ -58,6 +60,7 @@ void Game::startGame(int &humanScore, int &aiScore) {
 
   displayRules();
   chooseSide();
+  grid.displayGrid();
 
   bool gameOver = false;
 
@@ -70,6 +73,7 @@ void Game::startGame(int &humanScore, int &aiScore) {
         int hmove = human->determineMove();
         if(grid.getGrid()[hmove] == ' ') {
           grid.setSquare(hmove, 'X');
+          std::cout << "Your Move:" << std::endl;
           grid.displayGrid();
         }
         else{
@@ -176,6 +180,7 @@ void Game::startGame(int &humanScore, int &aiScore) {
         int hmove = human->determineMove();
         if(grid.getGrid()[hmove] == ' ') {
           grid.setSquare(hmove, 'O');
+          std::cout << "Your Move:" << std::endl;
           grid.displayGrid();
         }
         else{
