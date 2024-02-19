@@ -201,16 +201,25 @@ void Game::startGame(int &humanScore, int &aiScore) {
 
   int winner = grid.checkWin();
 
-  if(winner == 1) {
+  if(winner == 1 && human->getX() == true) {
     std::cout << "X's Win!" << std::endl;
     humanScore += 1;
   }
-  else if(winner == -1) {
+  else if(winner == -1 && human->getX() == false) {
+    std::cout << "O's Win!" << std::endl;
+    humanScore += 1;
+  }
+  else if(winner == 1 && ai->getX() == true) {
+    std::cout << "X's Win!" << std::endl;
+    aiScore += 1;
+  }
+  else if(winner == -1 && ai->getX() == false) {
     std::cout << "O's Win!" << std::endl;
     aiScore += 1;
   }
-  else
+  else {
     std::cout << "Tie!" << std::endl;
+  }
 
 
 }
