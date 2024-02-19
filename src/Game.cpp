@@ -99,8 +99,18 @@ void Game::startGame(int &humanScore, int &aiScore) {
       int amove;
       amove = ai->determineMove(node, path, -1000, 1000, node->id);
 
-      if(grid.getSquare(amove) == 'X' || grid.getSquare(amove) == 'O' ) {
-        node->nextXMoves();
+      bool stopwin = false;
+      node->nextXMoves();
+
+      for(int i = 0; i < node->children.size(); i++) {
+        if(node->children[i]->g.checkWin() == 1) {
+          stopwin = true;
+        }
+      }
+
+
+
+      if(grid.getSquare(amove) == 'X' || grid.getSquare(amove) == 'O' || stopwin == true) {
 
         for(int i = 0; i < node->children.size(); i++) {
           if(node->children[i]->g.checkWin() == 1) {
